@@ -1,12 +1,13 @@
+import { Value, EnvValue, CreateConfig } from './../entities/config.entity';
 import { Type } from "class-transformer";
 import { IsBoolean, IsNotEmpty, IsObject, IsString, ValidateNested } from "class-validator";
 
-class ConfigValue {
+export class AllConfigValue implements EnvValue {
     @IsNotEmpty()
-    @IsBoolean()
-    qa: boolean;
+    qa: Value;
+
 }
-export class CreateConfigDto {
+export class CreateConfigDto implements Omit<CreateConfig, "createdOn" | "createdBy">{
     @IsNotEmpty()
     @IsString()
     id: string;
@@ -16,7 +17,11 @@ export class CreateConfigDto {
     description: string;
 
     @IsNotEmpty()
+    @IsString()
+    type: Value;
+
+    @IsNotEmpty()
     @ValidateNested()
-    @Type(() => ConfigValue)
-    value: ConfigValue
+    @Type(() => AllConfigValue)
+    value: AllConfigValue
 }

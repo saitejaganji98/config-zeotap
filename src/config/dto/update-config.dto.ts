@@ -1,4 +1,16 @@
+import { UpdateConfig } from './../entities/config.entity';
 import { OmitType, PartialType } from '@nestjs/mapped-types';
-import { CreateConfigDto } from './create-config.dto';
+import { IsNotEmpty, IsOptional, ValidateNested } from 'class-validator';
+import { AllConfigValue, CreateConfigDto } from './create-config.dto';
+import { Type } from 'class-transformer';
 
-export class UpdateConfigDto extends OmitType(CreateConfigDto, ['id'] as const) {}
+export class UpdateConfigDto implements Omit<UpdateConfig, "updatedOn" | "updatedBy"> {
+    @IsNotEmpty()
+    @IsOptional()
+    description: string;
+
+    @IsNotEmpty()
+    @ValidateNested()
+    @Type(() => AllConfigValue)
+    value: AllConfigValue
+}

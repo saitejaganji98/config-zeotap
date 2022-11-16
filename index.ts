@@ -6,7 +6,11 @@ import * as functions from 'firebase-functions';
 import { AppModule } from './src/app.module';
 import * as admin from "firebase-admin";
 
-admin.initializeApp();
+var serviceAccount = require("/Users/saitejaganji/Downloads/zeotap-qa-microsvcs-firebase-adminsdk-45xrg-27fdfe2011.json")
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: process.env.DB_URL
+});
 const expressServer = express();
 const createFunction = async (expressInstance): Promise<void> => {
   const app = await NestFactory.create(

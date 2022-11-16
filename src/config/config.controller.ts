@@ -10,26 +10,26 @@ export class ConfigController {
   @Post()
   @HttpCode(200)
   create(@Body() createConfigDto: CreateConfigDto) {
-    return this.configService.create(createConfigDto);
+    return this.configService.createConfig(createConfigDto);
   }
 
   @Get()
   findAll() {
-    return this.configService.findAll();
+    return this.configService.getAllConfig();
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.configService.findOne(id);
+    return this.configService.getConfig(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateConfigDto: UpdateConfigDto) {
-    return this.configService.update(id, updateConfigDto);
+    return this.configService.updateConfig(id, updateConfigDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.configService.remove(id);
+    return this.configService.removeConfig(id);
   }
 }

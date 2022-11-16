@@ -6,4 +6,4 @@ import { ConfigController } from './config.controller';
   controllers: [ConfigController],
   providers: [ConfigService]
 })
-export class ConfigModule {}
+export class UnityConfigModule {}

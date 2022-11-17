@@ -10,8 +10,8 @@ import DocumentSnapshot = firestore.DocumentSnapshot;
 import QuerySnapshot = firestore.QuerySnapshot;
 
 @Injectable()
-export class ConfigService {
-  private readonly logger = new Logger(ConfigService.name);
+export class UnityConfigService {
+  private readonly logger = new Logger(UnityConfigService.name);
   private fbCollection: FirebaseFirestore.CollectionReference<FirebaseFirestore.DocumentData>;
   constructor(@Inject(REQUEST) private readonly request: { user: any }) {
     this.fbCollection = firestore().collection('config');

@@ -1,8 +1,8 @@
-import { UnityConfigModule } from './config/config.module';
-import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import * as admin from "firebase-admin";
 import { AuthModule } from './auth/auth.module';
+import { UnityConfigModule } from './config/config.module';
 import { EnvModule } from './env/env.module';
 
 @Module({
@@ -12,4 +12,14 @@ import { EnvModule } from './env/env.module';
   controllers: [],
   providers: [],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(private configService: ConfigService) {
+    const serviceAccountUrl = this.configService.get('SERVICE_ACCOUNT_JSON');
+    const serviceAccount = require(serviceAccountUrl)
+
+    admin.initializeApp({
+      credential: admin.credential.cert(serviceAccount),
+      databaseURL: this.configService.get('FIREBASE_DB_URL'),
+    });
+  }
+}

@@ -3,12 +3,12 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as admin from "firebase-admin";
 import { AuthModule } from './auth/auth.module';
 import { UnityConfigModule } from './config/config.module';
-import { EnvModule } from './env/env.module';
+import { JfrogModule } from './jfrog/jfrog.module';
 
 @Module({
   imports: [ConfigModule.forRoot({
     isGlobal: true,
-  }), UnityConfigModule,AuthModule, EnvModule],
+  }), UnityConfigModule,AuthModule, JfrogModule],
   controllers: [],
   providers: [],
 })

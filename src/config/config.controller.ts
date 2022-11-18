@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { UnityConfigService } from './config.service';
 import { CreateConfigDto } from './dto/create-config.dto';
 import { UpdateConfigDto } from './dto/update-config.dto';
@@ -8,7 +8,6 @@ export class ConfigController {
   constructor(private readonly configService: UnityConfigService) {}
 
   @Post()
-  @HttpCode(200)
   create(@Body() createConfigDto: CreateConfigDto) {
     return this.configService.createConfig(createConfigDto);
   }

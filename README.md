@@ -24,7 +24,8 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- Supports to add/update the config in firestore DB - http://localhost:5001/config
+- Supports to delpoy/get the config in JFrog artifactory  - http://localhost:5001/config
 
 ## Installation
 
@@ -34,12 +35,17 @@ $ npm install
 
 ## Running the app
 
+- Add a file .env to the root folder with the following content
+  - SERVICE_ACCOUNT_JSON=/path/to/ServiceAccount.json
+  - DB_URL=https://zeotap-qa-microsvcs-default-rtdb.firebaseio.com
+  - JFROG_API_KEY=abcde
+
 ```bash
 # development
 $ npm run start
 
 # watch mode
-$ npm run start:watch
+$ npm run start:dev
 
 # production mode
 $ npm run start:prod

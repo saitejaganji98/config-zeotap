@@ -29,8 +29,8 @@ export class UnityConfigService {
       // const userId = this.request.user;
       if (isGivenTypeNotMatchesValuesType(config))
         throw new HttpException("Property: 'type' does not match with some of the types of values. Allowed types: number, string, boolean, array, object", HttpStatus.BAD_REQUEST)
-      if (hasPropertyFrom(config as Config)(notAllowedProps))
-        throw new HttpException("Following properties cannot be added: " + notAllowedProps, HttpStatus.BAD_REQUEST);
+      // if (hasPropertyFrom(config as Config)(notAllowedProps))
+      //   throw new HttpException("Following properties cannot be added: " + notAllowedProps, HttpStatus.BAD_REQUEST);
       this.logger.debug('Created config:', config);
       return from(this.fbCollection.doc(config.id).get()).pipe(
         map((docSnapshot: DocumentSnapshot<Config>) => {
@@ -48,7 +48,7 @@ export class UnityConfigService {
   getAllConfig(): Observable<{ [id: string]: Config }> {
     try {
       return from(this.fbCollection.get()).pipe(
-        map((querySnapshot: QuerySnapshot<Config>) => {
+        map((querySnapshot: QuerySnapshot<Config>) => { this.logger.debug(querySnapshot,'ass')
           const config = querySnapshot.docs.reduce((acc, curr) => ({ ...acc, [curr.id]: curr.data() }), {});
           this.logger.debug('Config collection:', config);
           return config;
@@ -75,8 +75,8 @@ export class UnityConfigService {
     try {
       // const userId = this.request.user;
       const notAllowedProps = ["id", "type", "createdOn", "createdBy"]
-      if (hasPropertyFrom(updateConfigDto as Config)(notAllowedProps))
-        throw new HttpException("Following properties cannot be added: " + notAllowedProps, HttpStatus.BAD_REQUEST);
+      // if (hasPropertyFrom(updateConfigDto as Config)(notAllowedProps))
+      //   throw new HttpException("Following properties cannot be added: " + notAllowedProps, HttpStatus.BAD_REQUEST);
       const dotNotationValue = toDotNotation('value')(updateConfigDto.value)
       const updateConfigDtoWithoutValue = omit(['value'], updateConfigDto);
       const config = {

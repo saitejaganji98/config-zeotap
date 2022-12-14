@@ -1,5 +1,6 @@
 import { Config, ConfigValue } from './config/entities/config.entity';
 import { compose, either, filter, isEmpty,equals,type, isNil, any,has, __,map,all,toLower, mapObjIndexed, mergeAll, not, pluck, prop, propEq, values, converge } from 'ramda';
+import { Feature } from './feature/entities/feature.entity';
 
 const isTypeBoolean = propEq('type', 'boolean');
 const filterFeatures = filter(isTypeBoolean);
@@ -20,4 +21,4 @@ const isEqualType = (givenType: string) => compose(equals(givenType),toLower,typ
 const isGivenTypesDoesNotMatchAll = (givenType: string, value: ConfigValue)=> compose(not,all(isEqualType(givenType)),values)(value)
 export const isGivenTypeNotMatchesValuesType = converge(isGivenTypesDoesNotMatchAll,[prop('type'),prop('value')]);
 
-export const hasPropertyFrom = (config: Config) => any(has(__,config))
+export const hasPropertyFrom = (feature: Feature) => any(has(__,feature))

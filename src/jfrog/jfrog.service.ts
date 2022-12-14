@@ -1,3 +1,4 @@
+import { FeatureService } from './../feature/feature.service';
 import { HttpService } from '@nestjs/axios';
 import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -10,18 +11,18 @@ const JFROG_UNITY_CONFIG_URL = 'https://zeotap.jfrog.io/artifactory/generic-loca
 @Injectable()
 export class JfrogService {
   private readonly logger = new Logger(JfrogService.name);
-  constructor(private unityConfigService: UnityConfigService,private configService: ConfigService, private httpService: HttpService) {
+  constructor(private featureService: FeatureService,private configService: ConfigService, private httpService: HttpService) {
   }
 
-  getEnvConfigAndDeployArtifact(env: string):Observable<string> {
+  getEnvConfigAndDeployArtifact(env: string) {
     try {
-      return this.unityConfigService.getJsonForEnv(env).pipe(
+      return this.featureService.getFeaturesForEnv(env).pipe(
         switchMap(data => {
           const headers = {'X-JFrog-Art-Api': this.configService.get('JFROG_API_KEY')};
           const url = JFROG_UNITY_CONFIG_URL+ env+'/config.json'
-          return this.httpService.put(url,data, {headers}).pipe(map(r => r))
+          return this.httpService.put(url,data, {headers}).pipe(map(r => data))
         }),
-        map(res => 'Successfully updated the file.'),
+        map(data => ({msg:'Successfully updated the file.', data})),
         catchError((e) => {
           this.logger.error(e);
           return of(e.response.data.errors[0])

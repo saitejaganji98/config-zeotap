@@ -8,27 +8,27 @@ export class FeatureController {
   constructor(private readonly featureService: FeatureService) {}
 
   @Post()
-  create(@Body() createFeatureDto: CreateFeatureDto) {
-    return this.featureService.create(createFeatureDto);
+  addFeature(@Body() createFeatureDto: CreateFeatureDto) {
+    return this.featureService.addFeature(createFeatureDto);
   }
 
   @Get()
-  findAll() {
-    return this.featureService.findAll();
+  getAllFeatures() {
+    return this.featureService.getAllFeatures();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.featureService.findOne(id);
+  getFeature(@Param('id') id: string) {
+    return this.featureService.getFeature(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateFeatureDto: UpdateFeatureDto) {
-    return this.featureService.update(id, updateFeatureDto);
+  updateFeature(@Param('id') id: string, @Body() updateFeatureDto: UpdateFeatureDto) {
+    return this.featureService.updateFeature(id, updateFeatureDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.featureService.remove(id);
+  removeFeature(@Param('id') id: string) {
+    return this.featureService.removeFeature(id);
   }
 }

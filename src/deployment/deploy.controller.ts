@@ -1,20 +1,21 @@
-import { DeployRequestDto } from './dto/deploy-request.dto';
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post } from '@nestjs/common';
 import { DeployService } from './deploy.service';
+import { DeploymentRequestDto } from './dto/deploy-request.dto';
 
 @Controller('deployment')
 
 export class DeployController {
   constructor(private readonly deployService: DeployService) {}
 
-  @Post('/deploy')
-  deploy(@Body() deployRequestDto: DeployRequestDto) {
-    return this.deployService.deploy(deployRequestDto);
-  }
-
-  @Post('/redeploy/:id')
-  redeploy(@Param('id') id: string) {
-    return this.deployService.redeploy(id);
+  @Post()
+  deploy(@Body() deployRequestDto: DeploymentRequestDto) {
+    try {
+      const json = JSON.parse(JSON.stringify(deployRequestDto))
+      return this.deployService.deploy(json);
+    }
+    catch(e) {
+      throw new HttpException(e.message || e, HttpStatus.BAD_REQUEST)
+    }
   }
 
   @Get()

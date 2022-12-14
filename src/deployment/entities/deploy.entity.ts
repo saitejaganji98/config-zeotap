@@ -1,16 +1,19 @@
-import { DeployRequestDto } from "../dto/deploy-request.dto";
 
 export class Deploy {
-    data: Features;
+    features: Features;
     deployedBy: string;
     deployedAt: number;
     env: string;
 }
 
-export type Features = {[key:string]: Pick<DeployRequestDto, "enabled" | "config">};
+export type Features = {
+    [key:string]: {
+                    enabled: boolean;
+                    config: object;
+                }
+};
 
 export interface ArtifactResponse {
-    msg: string;
-    data: Features;
+    features: Features;
     env: string;
 }

@@ -1,19 +1,12 @@
-import { IsBoolean, IsNotEmpty, IsObject, IsOptional, IsString } from "class-validator";
+import { IsNotEmpty, IsObject, IsString } from "class-validator";
+import { Features } from "../entities/deploy.entity";
 
-export class DeployRequestDto {
+export class DeploymentRequestDto {
     @IsNotEmpty()
-    @IsString()
-    featureKey: string;
+    @IsObject()
+    features: Features;
 
     @IsNotEmpty()
     @IsString()
     env: string;
-
-    @IsNotEmpty()
-    @IsBoolean()
-    enabled: boolean;
-
-    @IsOptional()
-    @IsObject()
-    config: object;
 }
